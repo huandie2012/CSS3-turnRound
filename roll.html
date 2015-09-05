@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>roll</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+        @font-face{
+            font-family: "Raphaelicons";
+            src: url("fonts/raphaelicons-webfont.eot") format("eot"),
+                 url("fonts/raphaelicons-webfont.woff") format("woff"),
+                 url("fonts/raphaelicons-webfont.ttf") format("ttf"),
+                 url("fonts/raphaelicons-webfont.svg") format("svg");
+            font-weight: normal;
+            font-style: normal;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            overflow: hidden;
+        }
+        a,
+        input{
+            display: block;
+        	width: 20%;
+        	position: fixed;
+        	bottom: 0;
+        	height: 50px;
+        	line-height: 50px;
+        	background-color: #FA8072;
+        	text-decoration: none;
+        	color: #FFF;
+        	text-align: center;
+        	font-size: 36px;
+        	font-weight: bold;
+            z-index: 10;
+        }
+        a:hover{
+        	background-color: #D19275;
+        }
+        input{
+            z-index: 100;
+            cursor: pointer;
+            opacity: 0;
+        }
+        input:checked + a{
+        	background-color: #FF99FF;
+        }
+        input:checked + a:after{
+            content: "";
+            width: 0;
+            height: 0;
+        	border-top: 40px solid transparent;
+        	border-left: 40px solid transparent;
+        	border-right: 40px solid transparent;
+        	border-bottom: 40px solid #FF99FF;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -40px;
+        }
+        .bom02,
+        .bom_input_2{
+        	margin-left: 20%;
+        }
+        .bom03,
+        .bom_input_3{
+        	margin-left: 40%;
+        }
+        .bom04,
+        .bom_input_4{
+        	margin-left: 60%;
+        }
+        .bom05,
+        .bom_input_5{
+        	margin-left: 80%;
+        }
+
+        .st_contain,
+        .st_scroll{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            /*overflow: hidden;*/
+        }
+        .st_contain{
+            /*overflow: hidden;*/
+            top: 0;
+            left: 0;
+            -webkit-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            -webkit-backface-visibility: hidden;
+            -o-backface-visibility: hidden;
+            -ms-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: all 0.6s ease-in-out;
+            -webkit-transition: all 0.6s ease-in-out;
+            -o-transition: all 0.6s ease-in-out;
+            -moz-transition: all 0.6s ease-in-out;
+            -ms-transition: all 0.6s ease-in-out;
+        }
+        .st_scroll{
+            background-color: #FFFFFF;
+            overflow: hidden;
+        }
+        .st_color{
+            background-color: #FA8072;
+        }
+
+        .bom_input_1:checked~.st_contain{
+            -webkit-transform: translateY(0%);
+            -o-transform: translateY(0%);
+            -moz-transform: translateY(0%);
+            -ms-transform: translateY(0%);
+            transform: translateY(0%);
+        }
+        .bom_input_2:checked~.st_contain{
+            -webkit-transform: translateY(-100%);
+            -o-transform: translateY(-100%);
+            -moz-transform: translateY(-100%);
+            -ms-transform: translateY(-100%);
+            transform: translateY(-100%);
+        }
+        .bom_input_3:checked~.st_contain{
+            -webkit-transform: translateY(-200%);
+            -o-transform: translateY(-200%);
+            -moz-transform: translateY(-200%);
+            -ms-transform: translateY(-200%);
+            transform: translateY(-200%);
+        }
+        .bom_input_4:checked~.st_contain{
+            -webkit-transform: translateY(-300%);
+            -o-transform: translateY(-300%);
+            -moz-transform: translateY(-300%);
+            -ms-transform: translateY(-300%);
+            transform: translateY(-300%);
+        }
+        .bom_input_5:checked~.st_contain{
+            -webkit-transform: translateY(-400%);
+            -o-transform: translateY(-400%);
+            -moz-transform: translateY(-400%);
+            -ms-transform: translateY(-400%);
+            transform: translateY(-400%);
+        }
+        .title{
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            left: 50%;
+            top: -150px;
+            margin-left: -150px;
+            background-color: #FA8072;
+            -webkit-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        .st_color .title{
+            background-color: #FFFFFF;
+        }
+        .st_color .title[data-font]:after{
+            color: #FA8072;
+        }
+        
+        [data-font]:after{
+            content: attr(data-font);
+            width: 300px;
+            height: 300px;
+            line-height: 300px;
+            text-align: center;
+            font-size: 130px;
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            color: #FFF;
+            font-family: "Raphaelicons";
+            text-shadow: 1px 1px 1px rgba(151,24,64,0.2);
+        }
+        .st_scroll h2{
+            color: #FA8072;
+            font-size: 54px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: bold;
+            width: 30%;
+            position: absolute;
+            left: 35%;
+            top: 35%;
+            font-family: MicroSoft Yahei;
+        }
+        .st_color h2{
+            color: #FFFFFF;
+        }
+        .bom_input_1:checked~.st_contain #st_scroll_1 h2,
+        .bom_input_2:checked~.st_contain #st_scroll_2 h2,
+        .bom_input_3:checked~.st_contain #st_scroll_3 h2,
+        .bom_input_4:checked~.st_contain #st_scroll_4 h2,
+        .bom_input_5:checked~.st_contain #st_scroll_5 h2{
+            -webkit-animation: moveDown 0.5s ease-in-out 0.2s backwards;
+            -moz-animation: moveDown 0.5s ease-in-out 0.2s backwards;
+            -o-animation: moveDown 0.5s ease-in-out 0.2s backwards;
+            -ms-animation: moveDown 0.5s ease-in-out 0.2s backwards;
+            animation: moveDown 0.5s ease-in-out 0.2s backwards;
+        }
+        -webkit-@keyframes moveDown{
+            0%{
+                -webkit-transform: translateY(-60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        -moz-@keyframes moveDown{
+            0%{
+                -webkit-transform: translateY(-60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        -o-@keyframes moveDown{
+            0%{
+                -webkit-transform: translateY(-60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        -ms-@keyframes moveDown{
+            0%{
+                -webkit-transform: translateY(-60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        @keyframes moveDown{
+            0%{
+                -webkit-transform: translateY(-60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        .st_scroll p{
+            color: #e23a6e;
+            font-size: 18px;
+            line-height: 22px;
+            text-align: center;
+            font-weight: bold;
+            width: 60%;
+            position: absolute;
+            left: 20%;
+            top: 50%;
+            font-family: MicroSoft Yahei;
+            color: #8b8b8b;
+            -webkit-backface-visibility: hidden;
+        }
+        .bom_input_1:checked~.st_contain #st_scroll_1 p,
+        .bom_input_2:checked~.st_contain #st_scroll_2 p,
+        .bom_input_3:checked~.st_contain #st_scroll_3 p,
+        .bom_input_4:checked~.st_contain #st_scroll_4 p,
+        .bom_input_5:checked~.st_contain #st_scroll_5 p{
+            -webkit-animation: moveUp 0.5s ease-in-out 0.2s backwards;
+            -moz-animation: moveUp 0.5s ease-in-out 0.2s backwards;
+            -o-animation: moveUp 0.5s ease-in-out 0.2s backwards;
+            -ms-animation: moveUp 0.5s ease-in-out 0.2s backwards;
+            animation: moveUp 0.5s ease-in-out 0.2s backwards;
+        }
+        -webkit-@keyframes moveUp{
+            0%{
+                -webkit-transform: translateY(60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        -moz-@keyframes moveUp{
+            0%{
+                -webkit-transform: translateY(60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        -o-@keyframes moveUp{
+            0%{
+                -webkit-transform: translateY(60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        -ms-@keyframes moveUp{
+            0%{
+                -webkit-transform: translateY(60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+        @keyframes moveUp{
+            0%{
+                -webkit-transform: translateY(60px);
+                opacity: 0;
+            }
+            100%{
+                -webkit-transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        @media screen and (max-width:720px){
+            .st_scroll p{
+                width: 90%;
+                left: 5%;
+            }
+            input+a{
+                font-size: 20px;
+            }
+            .title{
+                width: 200px;
+                height: 200px;
+                position: absolute;
+                left: 50%;
+                top: -100px;
+                margin-left: -100px;
+            }
+            [data-font]:after{
+                content: attr(data-font);
+                width: 200px;
+                height: 200px;
+                line-height: 200px;
+                text-align: center;
+                font-size: 85px;
+                position: absolute;
+                top: 20%;
+                left: 20%;
+            }
+            .st_scroll h2{
+                color: #FA8072;
+                font-size: 42px;
+                line-height: 50px;
+                text-align: center;
+                font-weight: bold;
+                width: 30%;
+                position: absolute;
+                left: 22%;
+                top: 35%;
+            }
+        }
+	</style>
+</head>
+<body>
+    <!--底部导航-->
+	
+	<input type="radio" name="roll" checked="checked" class="bom_input_1">
+	<a href="#st_scroll_1" class="bom01">Serendipity</a>
+	<input type="radio" name="roll" class="bom_input_2">
+	<a href="#st_scroll_2" class="bom02">Happiness</a>
+	<input type="radio" name="roll" class="bom_input_3">
+	<a href="#st_scroll_3" class="bom03">Tranquillity</a>
+	<input type="radio" name="roll" class="bom_input_4">
+	<a href="#st_scroll_4" class="bom04">Positivity</a>
+	<input type="radio" name="roll" class="bom_input_5">
+	<a href="#st_scroll_5" class="bom05">Passion</a>
+	
+    <!--轮播内容-->
+    <div class="st_contain">
+        <section class="st_scroll" id="st_scroll_1">
+            <div class="title" data-font="H"></div>
+            <h2>Serendipity</h2>
+            <p>follow your heart, but be quiet for a while first. learn to trust your heart.first i need your hand ,then forever can begin </p>
+        </section>
+        <section class="st_color st_scroll" id="st_scroll_2">
+            <div class="title" data-font="2"></div>
+            <h2>Happiness</h2>
+            <p>follow your heart, but be quiet for a while first. learn to trust your heart.first i need your hand ,then forever can begin </p>
+        </section>
+        <section class="st_scroll" id="st_scroll_3">
+            <div class="title" data-font="B"></div>
+            <h2>Tranquillity</h2>
+            <p>follow your heart, but be quiet for a while first. learn to trust your heart.first i need your hand ,then forever can begin </p>
+        </section>
+        <section class="st_color st_scroll" id="st_scroll_4">
+            <div class="title" data-font="Q"></div>
+            <h2>Positivity</h2>
+            <p>follow your heart, but be quiet for a while first. learn to trust your heart.first i need your hand ,then forever can begin </p>
+        </section>
+        <section class="st_scroll" id="st_scroll_5">
+            <div class="title" data-font="C"></div>
+            <h2>Passion</h2>
+            <p>follow your heart, but be quiet for a while first. learn to trust your heart.first i need your hand ,then forever can begin </p>
+        </section>
+    </div>
+</body>
+</html>
